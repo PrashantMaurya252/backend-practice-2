@@ -35,4 +35,4 @@ const globalErrorhandler = (err, req, res, next) => {
   }
 };
 
-MediaSourceHandle.exports = {APIError,asyncHandler,globalErrorhandler}
+module.exports = {APIError,asyncHandler,globalErrorhandler}
