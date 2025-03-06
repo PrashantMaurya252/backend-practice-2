@@ -72,6 +72,24 @@ async function redisDatStructures(){
 
         // console.log(cartTwoRank,"two rank")
 
+        // hashes -> HSET,HGET,HGETALL,HDEL
+
+        await client.hSet('product:1',{
+            name:'Product 1',
+            description:'product one description',
+            rating:'5'
+        })
+
+        const getProductRating = await client.hGet('product:1','rating')
+        console.log(getProductRating,"getProductRating")
+
+        const productDetails = await client.hGetAll("product:1")
+        console.log(productDetails,"product")
+
+        await client.hDel('product:1','rating')
+        const updatedProductDetails = await client.hGetAll('product:1')
+        console.log(updatedProductDetails,"updatedProductDetails")
+
 
     } catch (error) {
         console.log(error)
