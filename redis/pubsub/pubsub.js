@@ -70,6 +70,24 @@ async function testAdditionalFeatures(){
 
         // await cartExample.exec()
 
+        console.log("PErformance test")
+        console.time("without pipelining")
+
+        for(let i =0;i<1000;i++){
+            await client.set(`user${i}`,`user_value${i}`)
+        }
+
+        console.timeEnd('without pipelining')
+
+        console.time("with pipelining")
+        const bigPipeline = client.multi()
+        for(let i =0;i<1000;i++){
+            bigPipeline.set(`user-pipeline-key${i}`,`user_pipeline_value${i}`)
+        }
+
+        await bigPipeline.exec()
+        console.timeEnd("with pipelining")
+
     } catch (error) {
         console.log(error)
     }finally{
