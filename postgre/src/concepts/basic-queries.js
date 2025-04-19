@@ -25,9 +25,43 @@ async function insertUser(username,email){
     `;
     try {
         const res = await db.query(insertUserQuery,[username,email])
+        console.log('user inserted successfully',res.rows[0])
+        return res.rows[0]
     } catch (error) {
         console.log('Error while inserting new user',error)
     }
 }
 
-module.exports = {createUsersTable} 
+async function fetchAllUsers(){
+    const getAllUsersFromUsersTable = 'SELECT * FROM users';
+    try {
+        const res = await db.query(getAllUsersFromUsersTable)
+        console.log('Fetched all users',res.rows)
+        return res.rows
+    } catch (error) {
+        console.log("Error while fetching users",error)
+    }
+}
+
+async function updateUserEmail(username,newEmail){
+    const updateUserQuery = `
+    UPDATE users
+    SET email = $2
+    WHERE username = $1
+    RETURNING *
+    `;
+
+    try {
+        const res = await db.query(updateUserQuery,[username,newEmail])
+
+        if(res.rows.length > 0){
+            console.log('User updated successfully!', res.rows[0])
+            return res.rows[0]
+        }else{
+            console.log('No user found with given username')
+        }
+    } catch (error) {
+        console.log("error during email update",error)
+    }
+}
+module.exports = {createUsersTable,insertUser,fetchAllUsers,updateUserEmail} 
