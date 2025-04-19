@@ -1,4 +1,6 @@
-const {Pool} = req('pg')
+require('dotenv').config()
+
+const {Pool} = require('pg')
 
 // create a new pool instances to manage database connections
 
