@@ -59,9 +59,31 @@ async function updateUserEmail(username,newEmail){
             return res.rows[0]
         }else{
             console.log('No user found with given username')
+            return null
         }
     } catch (error) {
         console.log("error during email update",error)
     }
 }
-module.exports = {createUsersTable,insertUser,fetchAllUsers,updateUserEmail} 
+
+async function deleteInfo(username){
+    const deleteQuery = `
+    DELETE FROM users
+    WHERE username = $1
+    RETURNING *
+    `;
+    try {
+        const res = await db.query(deleteQuery,[username])
+
+        if(res.rows.length > 0){
+            console.log('user deleted successfully!',res.rows[0])
+            return res.rows[0]
+        }else{
+            console.log("No user found with given username")
+            return null
+        }
+    } catch (error) {
+        console.log("error while deleting user",error)
+    }
+}
+module.exports = {createUsersTable,insertUser,fetchAllUsers,updateUserEmail,deleteInfo} 

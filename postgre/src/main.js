@@ -1,5 +1,6 @@
 
-const {createUsersTable,insertUser, fetchAllUsers, updateUserEmail} = require('./concepts/basic-queries')
+const {createUsersTable,insertUser, fetchAllUsers, updateUserEmail, deleteInfo} = require('./concepts/basic-queries')
+const { getUsersWhere, getSortedUsers } = require('./concepts/filtering-sorting')
 
 // test basic queries
 
@@ -16,15 +17,33 @@ async function testBasicQueries(){
         // const allUsers = await fetchAllUsers()
         // console.log(allUsers)
 
-        const updateUser = await updateUserEmail("Pavan Kumar","kumar@gmail.com")
-        console.log(updateUser)
+        // const updateUser = await updateUserEmail("Pavan Kumar","kumar@gmail.com")
+        // console.log(updateUser)
+
+        const deletedUser = await deleteInfo("Pavan Kumar")
+        console.log(deletedUser)
     } catch (error) {
         console.log("error",error)
     }
 }
 
+async function testFilterAndSortQueries(){
+    try {
+        // get users with username whose username starting with s
+
+        // const sFilteredUsers = await getUsersWhere("username LIKE 'S%'")
+        // console.log(sFilteredUsers)
+
+        const sortedUsers = await getSortedUsers('created_at','ASC')
+        console.log(sortedUsers)
+    } catch (error) {
+        console.log("Error",error)
+    }
+}
+
 async function testAllQueries(){
-    await testBasicQueries()
+    // await testBasicQueries()
+    await testFilterAndSortQueries()
 }
 
 testAllQueries()
