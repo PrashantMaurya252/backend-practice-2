@@ -1,7 +1,8 @@
 
 const {createUsersTable,insertUser, fetchAllUsers, updateUserEmail, deleteInfo} = require('./concepts/basic-queries')
 const { getUsersWhere, getSortedUsers, getPaginatedUsers } = require('./concepts/filtering-sorting')
-const { createPostsTable } = require('./concepts/relationships')
+const { getUsersWithPosts } = require('./concepts/join')
+const { createPostsTable, insertNewPost } = require('./concepts/relationships')
 
 // test basic queries
 
@@ -47,9 +48,19 @@ async function testFilterAndSortQueries(){
 
 async function testRelationshipQueries(){
     try {
-        await createPostsTable()
+        // await createPostsTable()
+        await insertNewPost('first post',"This is my first post",1)
     } catch (error) {
         console.log("Relationship error",error)
+    }
+}
+
+async function testJoinQueries(){
+    try {
+        const usersWithPosts = await getUsersWithPosts()
+        console.log(usersWithPosts)
+    } catch (error) {
+        console.log("tes join error",error)
     }
 }
 
@@ -57,7 +68,8 @@ async function testAllQueries(){
     // await testBasicQueries()
     // await testFilterAndSortQueries()
 
-    await testRelationshipQueries()
+    // await testRelationshipQueries()
+    await testJoinQueries()
 }
 
 testAllQueries()
