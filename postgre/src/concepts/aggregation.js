@@ -16,4 +16,22 @@ async function countPostsByUser(){
     }
 }
 
-module.exports = {countPostsByUser}
+async function averagePostsPerUser(){
+    const averagePostsPerUserQuery = `
+        SELECT AVG(post_count) as average_posts
+        FROM(
+        SELECT COUNT(posts.id) as post_count
+        FROM users
+        LEFT JOIN posts ON users.id = posts.user_id
+        GROUP BY users.id
+        ) as user_per_counts
+        `;
+    try {
+        const res = await db.query(averagePostsPerUserQuery)
+        return res.rows;
+    } catch (error) {
+        console.log("averagePostsPerUser",error)
+    }
+}
+
+module.exports = {countPostsByUser,averagePostsPerUser}

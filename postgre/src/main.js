@@ -1,5 +1,5 @@
 
-const { countPostsByUser } = require('./concepts/aggregation')
+const { countPostsByUser, averagePostsPerUser } = require('./concepts/aggregation')
 const {createUsersTable,insertUser, fetchAllUsers, updateUserEmail, deleteInfo} = require('./concepts/basic-queries')
 const { getUsersWhere, getSortedUsers, getPaginatedUsers } = require('./concepts/filtering-sorting')
 const { getUsersWithPosts, getAllUsersAndTheirPosts } = require('./concepts/join')
@@ -70,8 +70,11 @@ async function testJoinQueries(){
 
 async function testAggregateQuerise(){
     try {
-        const postCount = await countPostsByUser()
-        console.log(postCount)
+        // const postCount = await countPostsByUser()
+        // console.log(postCount)
+
+        const averagePosts = await averagePostsPerUser()
+        console.log(averagePosts)
     } catch (error) {
         console.log("testAggregate queries error",error)
     }
