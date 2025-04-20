@@ -1,7 +1,8 @@
 
+const { countPostsByUser } = require('./concepts/aggregation')
 const {createUsersTable,insertUser, fetchAllUsers, updateUserEmail, deleteInfo} = require('./concepts/basic-queries')
 const { getUsersWhere, getSortedUsers, getPaginatedUsers } = require('./concepts/filtering-sorting')
-const { getUsersWithPosts } = require('./concepts/join')
+const { getUsersWithPosts, getAllUsersAndTheirPosts } = require('./concepts/join')
 const { createPostsTable, insertNewPost } = require('./concepts/relationships')
 
 // test basic queries
@@ -49,7 +50,7 @@ async function testFilterAndSortQueries(){
 async function testRelationshipQueries(){
     try {
         // await createPostsTable()
-        await insertNewPost('first post',"This is my first post",1)
+        await insertNewPost('Third post',"This is my Third post",2)
     } catch (error) {
         console.log("Relationship error",error)
     }
@@ -57,10 +58,22 @@ async function testRelationshipQueries(){
 
 async function testJoinQueries(){
     try {
-        const usersWithPosts = await getUsersWithPosts()
-        console.log(usersWithPosts)
+        // const usersWithPosts = await getUsersWithPosts()
+        // console.log(usersWithPosts)
+
+        const allUserswithTheirPosts = await getAllUsersAndTheirPosts()
+        console.log(allUserswithTheirPosts)
     } catch (error) {
         console.log("tes join error",error)
+    }
+}
+
+async function testAggregateQuerise(){
+    try {
+        const postCount = await countPostsByUser()
+        console.log(postCount)
+    } catch (error) {
+        console.log("testAggregate queries error",error)
     }
 }
 
@@ -69,7 +82,8 @@ async function testAllQueries(){
     // await testFilterAndSortQueries()
 
     // await testRelationshipQueries()
-    await testJoinQueries()
+    // await testJoinQueries()
+    await testAggregateQuerise()
 }
 
 testAllQueries()

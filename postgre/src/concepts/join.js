@@ -17,4 +17,20 @@ async function getUsersWithPosts(){
     }
 }
 
-module.exports = {getUsersWithPosts}
+// left join
+
+async function getAllUsersAndTheirPosts(){
+    const getAllUsersAndTheirPostsQuery = `
+    SELECT users.id, users.username, posts.title
+    FROM users
+    LEFT JOIN posts ON users.id = posts.user_id
+    `;
+    try {
+        const res = await db.query(getAllUsersAndTheirPostsQuery)
+        return res.rows
+    } catch (error) {
+        console.log("get All users with their posts  error",error)
+    }
+}
+
+module.exports = {getUsersWithPosts,getAllUsersAndTheirPosts}
