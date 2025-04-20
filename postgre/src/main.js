@@ -1,6 +1,7 @@
 
 const {createUsersTable,insertUser, fetchAllUsers, updateUserEmail, deleteInfo} = require('./concepts/basic-queries')
-const { getUsersWhere, getSortedUsers } = require('./concepts/filtering-sorting')
+const { getUsersWhere, getSortedUsers, getPaginatedUsers } = require('./concepts/filtering-sorting')
+const { createPostsTable } = require('./concepts/relationships')
 
 // test basic queries
 
@@ -34,16 +35,29 @@ async function testFilterAndSortQueries(){
         // const sFilteredUsers = await getUsersWhere("username LIKE 'S%'")
         // console.log(sFilteredUsers)
 
-        const sortedUsers = await getSortedUsers('created_at','ASC')
-        console.log(sortedUsers)
+        // const sortedUsers = await getSortedUsers('created_at','ASC')
+        // console.log(sortedUsers)
+
+        const paginatedUsers = await getPaginatedUsers(2,1)
+        console.log("paginated users",paginatedUsers)
     } catch (error) {
         console.log("Error",error)
     }
 }
 
+async function testRelationshipQueries(){
+    try {
+        await createPostsTable()
+    } catch (error) {
+        console.log("Relationship error",error)
+    }
+}
+
 async function testAllQueries(){
     // await testBasicQueries()
-    await testFilterAndSortQueries()
+    // await testFilterAndSortQueries()
+
+    await testRelationshipQueries()
 }
 
 testAllQueries()
