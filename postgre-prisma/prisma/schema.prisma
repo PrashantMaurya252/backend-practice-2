@@ -17,7 +17,15 @@ datasource db {
 // this file will be used for any model  that you want to create this project
 
 model Book {
-  id Int @id @default(autoincrement())
-  title String
+  id           Int      @id @default(autoincrement())
+  title        String
   publisedDate DateTime
+  author       Author   @relation(fields: [authorId], references: [id])
+  authorId     Int
+}
+
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String
+  books Book[]
 }

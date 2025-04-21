@@ -20,4 +20,12 @@ model Book {
   id           Int      @id @default(autoincrement())
   title        String
   publisedDate DateTime
+  author       Author   @relation(fields: [authorId], references: [id])
+  authorId     Int
+}
+
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String
+  books Book[]
 }

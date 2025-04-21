@@ -120,7 +120,13 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.BookScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  publisedDate: 'publisedDate'
+  publisedDate: 'publisedDate',
+  authorId: 'authorId'
+};
+
+exports.Prisma.AuthorScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
 };
 
 exports.Prisma.SortOrder = {
@@ -135,7 +141,8 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Book: 'Book'
+  Book: 'Book',
+  Author: 'Author'
 };
 
 /**
