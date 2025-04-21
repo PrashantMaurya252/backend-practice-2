@@ -21,4 +21,48 @@ async function addBook(title,publisedDate,authorId){
     }
 }
 
-module.exports = {addBook}
+async function getAllBook(){
+    try {
+        const books = await prisma.book.findMany({
+            include:{author:true}
+        })
+    } catch (error) {
+        console.log("get all books error",error)
+    }
+}
+
+async function getBookById(id){
+    try {
+        const book = await prisma.book.findUnique({
+            where:{id},
+            include:{author:true}
+        })
+
+        if(!book){
+            throw new Error(`Book with id ${id} not found`)
+        }
+
+        return book
+    } catch (error) {
+        console.log("getBookById error",error)
+    }
+}
+
+async function updateBook(id,newTitle){
+    try {
+        const updatedBook = await prisma.book.update({
+            where:{id},
+            data:{
+                title:newTitle
+            },
+            include:{
+                author:true
+            }
+        })
+        return updatedBook
+    } catch (error) {
+        console.log("update book error",error)
+    }
+}
+
+module.exports = {addBook,getAllBook,getBookById,updateBook}

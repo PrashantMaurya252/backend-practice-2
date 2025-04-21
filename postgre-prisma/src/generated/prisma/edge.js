@@ -155,11 +155,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgres://postgres:Postgre@885@localhost:5432/prisma-with-postgres"
+        "value": null
       }
     }
   },

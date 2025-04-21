@@ -4,9 +4,7 @@ const prisma = new PrismaClient()
 async function addAuthor(name){
     try {
         const newelyCreatedAuthor = await prisma.author.create({
-            data:{
-                name
-            }
+            data:{name},
         })
         return newelyCreatedAuthor;
     } catch (error) {
