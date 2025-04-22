@@ -26,6 +26,7 @@ async function getAllBook(){
         const books = await prisma.book.findMany({
             include:{author:true}
         })
+        return books
     } catch (error) {
         console.log("get all books error",error)
     }
@@ -97,13 +98,14 @@ async function updateBook(id,newTitle){
 
 async function deleteBook(id){
     try {
-        const deleteBook = await prisma.book.delete({
+        const deletedBook = await prisma.book.delete({
             where:{id},
             include:{author:true}
-        })
+        });
+        return deletedBook
     } catch (error) {
         console.log("delete book error",error)
     }
 }
 
-module.exports = {addBook,getAllBook,getBookById,updateBook}
+module.exports = {addBook,getAllBook,getBookById,updateBook,deleteBook}
