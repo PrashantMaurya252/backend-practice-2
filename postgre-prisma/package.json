@@ -5,8 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"npx prisma generate && nodemon src/server.js",
-    "start":"npx prisma generate && node src/server.js"
+    "dev": "npx prisma generate && nodemon src/server.js",
+    "start": "npx prisma generate && node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "nodemon": "^3.1.9",
-    "prisma": "^6.6.0"
+    "prisma": "^6.6.0",
+    "prom-client": "^15.1.3"
   }
 }
