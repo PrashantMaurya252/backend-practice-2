@@ -29,7 +29,7 @@ export default tseslint.config(
       // '@typescript-eslint/no-explicit-any': 'off',
       // '@typescript-eslint/no-floating-promises': 'warn',
       // '@typescript-eslint/no-unsafe-argument': 'warn',
-      // 'linebreak-style': ['error', 'unix'], // ✅ This is the new rule
+      // 'linebreak-style': ['error', 'windows'], // ✅ This is the new rule
     },
   },
 );
