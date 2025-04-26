@@ -1,6 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -18,8 +19,16 @@ export class AuthService {
     }
     // hash the password
 
-    const hashedPassword = 
+    const hashedPassword = await  bcrypt.hash(password,10)
     // create new user
+    const newelyCreatedUser = await this.prisma.user.create({
+        data: {
+            email,password:hashedPassword
+        }
+    })
     // remove password from the return object
+
+    const {password: _, ...result} = newelyCreatedUser
+    return result
   }
 }
