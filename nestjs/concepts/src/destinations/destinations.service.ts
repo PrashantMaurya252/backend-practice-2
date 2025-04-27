@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDestinationDto } from 'src/auth/dto/create-destination.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateDestinationDto } from './dto/update-destination.dto';
 
 @Injectable()
 export class DestinationsService {
@@ -15,5 +16,38 @@ export class DestinationsService {
         })
     }
 
-    async findAll(userId)
+    async findAll(userId:number){
+        return this.prisma.destination.findMany({
+            where:{userId},
+        })
+    }
+
+    async findOne(userId:number,id:number){
+        const destination = await this.prisma.destination.findFirst({
+            where:{id,userId}
+        })
+
+        if(!destination){
+            throw new NotFoundException(`Destination not found with this id ${id}`)
+        }
+
+        return destination
+    }
+
+    async removeDestination(userId:number,id:number){
+        await this.findOne(userId,id)
+
+        return this.prisma.destination.delete({
+            where:{id}
+        })
+    }
+
+    async update(userId:number,id:number,updateDestinationDto:UpdateDestinationDto){
+        await this.findOne(userId,id)
+        return this.prisma.destination.update({
+            where:{id},
+            data:updateDestinationDto,
+        })
+    }
+
 }
