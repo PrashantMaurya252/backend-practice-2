@@ -1,4 +1,4 @@
-import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Delete, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -25,5 +25,10 @@ export class FileUploadController {
 
     async uploadFile(@UploadedFile() file:Express.Multer.File){
         return this.fileUploaderService.uploadFile(file)
+    }
+
+    @Delete(':id')
+    async deleteFile(@Param('id') id:string){
+        return this.fileUploaderService.deleteFile(id)
     }
 }

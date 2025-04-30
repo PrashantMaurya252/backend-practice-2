@@ -43,4 +43,27 @@ export class FileUploadService {
         })
     })
   }
+
+  async deleteFile(fileId : string){
+    try {
+      const file = await this.prisma.file.findUnique({
+        where:{
+          id:fileId
+        }
+      })
+      if(!file){
+        throw new Error('File not found! Please try with a different file ID')
+      }
+      await cloudinary.uploader.destroy(file.publicId)
+
+      await this.prisma.file.delete({
+        where:{id:fileId}
+      });
+      return {
+        message:'File deleted successfully'
+      }
+    } catch (error) {
+      throw new InternalServerErrorException('File deletion failed! Please try again after some time')
+    }
+  } 
 }
